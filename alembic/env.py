@@ -1,7 +1,7 @@
 from app.db.base import Base
 from app.db.session import engine
 
-# import all models so Alembic can detect them
-from app.models.user import User
-from app.models.project import Project
-from app.models.task import Task
+# IMPORTANT: import all models
+from app.models import user, project, task
+
+target_metadata = Base.metadata
