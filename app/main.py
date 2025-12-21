@@ -1,7 +1,7 @@
 import os
 from fastapi import FastAPI
 from app.api import auth, users, projects, tasks
-
+from app.db.init__db import init__db
 # Create FastAPI instance
 app = FastAPI(title="Task Management API")
 
@@ -16,6 +16,9 @@ app.include_router(tasks.router, prefix="/tasks", tags=["Tasks"])
 def root():
     return {"message": "Task Management API is running!"}
 
+@app.on_event("startup")
+def on_startup():
+    init__db()
 # For local development
 if __name__ == "__main__":
     import uvicorn
