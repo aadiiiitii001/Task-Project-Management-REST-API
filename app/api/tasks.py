@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
@@ -8,6 +8,7 @@ from app.utils.dependencies import get_current_user, require_role
 from app.utils.pagination import get_pagination
 
 router = APIRouter()
+
 
 @router.post(
     "/",
@@ -28,9 +29,11 @@ def create_task(
         project_id=task.project_id,
         assigned_to=task.assigned_to,
     )
+
     db.add(new_task)
     db.commit()
     db.refresh(new_task)
+
     return new_task
 
 
@@ -44,31 +47,7 @@ def list_tasks(
 
     query = db.query(Task)
 
-    # Users can only see their own tasks
     if current_user.role == "user":
         query = query.filter(Task.assigned_to == current_user.id)
 
-    tasks = query.offset(offset).limit(limit).all()
-    return tasks
-
-
-@router.patch("/{task_id}", response_model=TaskResponse)
-def update_task_status(
-    task_id: int,
-    status: str,
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user),
-):
-    task = db.query(Task).filter(Task.id == task_id).first()
-
-    if not task:
-        raise HTTPException(status_code=404, detail="Task not found")
-
-    # Regular users can update only their own tasks
-    if current_user.role == "user" and task.assigned_to != current_user.id:
-        raise HTTPException(status_code=403, detail="Not allowed")
-
-    task.status = status
-    db.commit()
-    db.refresh(task)
-    return task
+    return query.offset(offset).limit(limit).all()
