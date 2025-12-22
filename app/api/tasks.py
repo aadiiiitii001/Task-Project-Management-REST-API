@@ -40,8 +40,8 @@ def create_task(
 @router.get("/", response_model=list[TaskResponse])
 def list_tasks(
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user),
-    pagination=Depends(get_pagination),
+    current_user = Depends(get_current_user),
+    pagination = Depends(get_pagination),
 ):
     offset, limit = pagination
 
