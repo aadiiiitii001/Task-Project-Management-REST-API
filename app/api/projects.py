@@ -17,10 +17,12 @@ router = APIRouter()
 def create_project(
     project: ProjectCreate,
     db: Session = Depends(get_db),
+    current_user = Depends(get_current_user),
 ):
     new_project = Project(
         name=project.name,
         description=project.description,
+        owner_id=current_user.id,
     )
     db.add(new_project)
     db.commit()
