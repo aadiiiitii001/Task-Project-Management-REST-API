@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.models.project import Project
 from app.schemas.project import ProjectCreate, ProjectResponse
-from app.utils.dependencies import require_role
+from app.utils.dependencies import require_role, get_current_user
 
 router = APIRouter()
+
 
 @router.post(
     "/",
@@ -24,9 +25,11 @@ def create_project(
         description=project.description,
         owner_id=current_user.id,
     )
+
     db.add(new_project)
     db.commit()
     db.refresh(new_project)
+
     return new_project
 
 
