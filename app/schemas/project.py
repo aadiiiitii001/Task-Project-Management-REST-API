@@ -1,26 +1,41 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
-
-class ProjectBase(BaseModel):
-    name: str = Field(..., max_length=100)
-    description: Optional[str] = Field(None, max_length=500)
+from app.db.base import Base
 
 
-class ProjectCreate(ProjectBase):
-    pass
+class Project(Base):
+    __tablename__ = "projects"
 
+    id = Column(Integer, primary_key=True, index=True)
 
-class ProjectUpdate(BaseModel):
-    name: Optional[str] = Field(None, max_length=100)
-    description: Optional[str] = Field(None, max_length=500)
+    name = Column(String(100), nullable=False, unique=True)
+    description = Column(Text, nullable=True)
 
+    owner_id = Column(
+        Integer,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
 
-class ProjectResponse(ProjectBase):
-    id: int
-    created_at: datetime
-    updated_at: datetime
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
 
-    class Config:
-        from_attributes = True
+    updated_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False
+    )
+
+    # relationships
+    owner = relationship("User", backref="projects")
+    tasks = relationship(
+        "Task",
+        back_populates="project",
+        cascade="all, delete-orphan"
+    )
