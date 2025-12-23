@@ -72,6 +72,7 @@ app/
 │
 └── main.py
 
+
 🔐 Authentication Flow
 
 User registers using /auth/register
