@@ -112,7 +112,7 @@ app/
   "name": "Task Manager",
   "description": "Backend API Project"
 }
-🗄️ Database
+## 🗄️ Database
 
 PostgreSQL hosted on Render.
 
@@ -129,7 +129,7 @@ Relationships
 One User → Many Projects
 
 One Project → Many Tasks
-⚙️ Environment Variables
+## ⚙️ Environment Variables
 
 Create a .env file and configure the following:
 
@@ -138,7 +138,7 @@ SECRET_KEY=your_secret_key
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
-🚀 Run Locally
+## 🚀 Run Locally
 git clone https://github.com/aadiiiitii001/Task-Project-Management-REST-API.git
 cd Task-Project-Management-REST-API
 
