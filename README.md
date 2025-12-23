@@ -1,7 +1,8 @@
-🚀 Task Management REST API
+Task Management REST API
 
-A FastAPI-based Task Management System that allows users to register, authenticate, create projects, and manage tasks.
-The application uses JWT authentication, PostgreSQL, SQLAlchemy ORM, and is deployed on Render.
+A backend REST API built using FastAPI for managing users, projects, and tasks.
+The application implements JWT authentication, PostgreSQL persistence, and follows a clean modular architecture.
+The project is deployed on Render and exposes interactive API documentation using Swagger.
 
 🌐 Live Demo
 
