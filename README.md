@@ -1,4 +1,4 @@
-Task Management REST API
+##Task Management REST API
 
 A backend REST API built using FastAPI for managing users, projects, and tasks.
 The application implements JWT authentication, PostgreSQL persistence, and follows a clean modular architecture.
