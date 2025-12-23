@@ -143,7 +143,7 @@ ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 🚀 Run Locally
-git clone https://github.com/your-username/task-management-api.git
+git clone https://github.com/aadiiiitii001/Task-Project-Management-REST-API.git
 cd task-management-api
 python -m venv venv
 source venv/bin/activate
