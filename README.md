@@ -1,129 +1,122 @@
-##Task Management REST API
+# Task Management REST API 🚀
 
-A backend REST API built using FastAPI for managing users, projects, and tasks.
-The application implements JWT authentication, PostgreSQL persistence, and follows a clean modular architecture.
-The project is deployed on Render and exposes interactive API documentation using Swagger.
+A backend **REST API** built using **FastAPI** for managing **users, projects, and tasks**.  
+The application implements **JWT authentication**, **PostgreSQL persistence**, and follows a **clean modular architecture**.  
+It is deployed on **Render** and provides interactive API documentation via **Swagger UI**.
 
-🌐 Live Demo
+---
 
-Base URL:
-'''
+## 🌐 Live Demo
+
+**Base URL:**  
 https://task-project-management-rest-api.onrender.com
-'''
 
-Swagger UI (API Docs):
-
+**Swagger UI (API Docs):**  
 https://task-project-management-rest-api.onrender.com/docs
 
-🛠️ Tech Stack
+---
 
-Backend Framework: FastAPI
+## 🛠️ Tech Stack
 
-Database: PostgreSQL
+- **Backend Framework:** FastAPI  
+- **Language:** Python 3.13  
+- **Database:** PostgreSQL  
+- **ORM:** SQLAlchemy  
+- **Authentication:** JWT (OAuth2 Password Flow)  
+- **Server:** Gunicorn  
+- **Deployment:** Render  
 
-ORM: SQLAlchemy
+---
 
-Authentication: JWT (OAuth2 Password Flow)
+## 📌 Features
 
-Server: Gunicorn
+- User Registration & Login
+- JWT-based Authentication
+- Project Management (Create, Read)
+- Task Management (Create, Read, Assign to Project)
+- Relationship Handling  
+  - One User → Many Projects  
+  - One Project → Many Tasks
+- Automatic API Documentation (Swagger UI)
 
-Deployment: Render
+---
 
-Language: Python 3.13
-
-📌 Features
-
-User Registration & Login
-
-JWT-based Authentication
-
-Project Management (Create, Read)
-
-Task Management (Create, Read, Assign to Project)
-
-Relationship handling (User → Projects → Tasks)
-
-Automatic API Documentation (Swagger)
-
-📂 Project Structure
+## 📂 Project Structure
 app/
 ├── api/
-│   ├── auth.py
-│   ├── users.py
-│   ├── projects.py
-│   └── tasks.py
+│ ├── auth.py
+│ ├── users.py
+│ ├── projects.py
+│ └── tasks.py
 │
 ├── models/
-│   ├── user.py
-│   ├── project.py
-│   └── task.py
+│ ├── user.py
+│ ├── project.py
+│ └── task.py
 │
 ├── schemas/
-│   ├── user.py
-│   ├── project.py
-│   └── task.py
+│ ├── user.py
+│ ├── project.py
+│ └── task.py
 │
 ├── db/
-│   ├── base.py
-│   ├── session.py
-│   └── init_db.py
+│ ├── base.py
+│ ├── session.py
+│ └── init_db.py
 │
 ├── core/
-│   └── config.py
+│ └── config.py
 │
 └── main.py
 
+---
 
-🔐 Authentication Flow
+## 🔐 Authentication Flow
 
-User registers using /auth/register
+1. User registers via `/auth/register`
+2. User logs in via `/auth/login`
+3. API returns a **JWT access token**
+4. Token must be passed in request headers for protected routes
 
-User logs in using /auth/login
+**Header Format:**
 
-API returns JWT access token
+---
 
-Token is passed in request headers for protected routes
+## 📌 API Endpoints Overview
 
-Authorization: Bearer <access_token>
+### 🔑 Auth
+- `POST /auth/register` – Register a new user  
+- `POST /auth/login` – Login and receive JWT token  
 
-📌 API Endpoints Overview
-🔑 Auth
+### 👤 Users
+- `GET /users/me` – Get logged-in user details  
 
-POST /auth/register – Register user
+### 📁 Projects
+- `POST /projects/` – Create a project  
+- `GET /projects/` – Get all projects  
 
-POST /auth/login – Login & get JWT token
+### ✅ Tasks
+- `POST /tasks/` – Create a task  
+- `GET /tasks/` – Get all tasks  
 
-👤 Users
+---
 
-GET /users/me – Get logged-in user details
+## 🧪 Example Request
 
-📁 Projects
+### Create Project
 
-POST /projects/ – Create project
+**POST** `/projects/`
 
-GET /projects/ – Get all projects
-
-✅ Tasks
-
-POST /tasks/ – Create task
-
-GET /tasks/ – Get all tasks
-
-🧪 Example Request
-Create Project
-
-POST /projects/
-
+```json
 {
   "name": "Task Manager",
   "description": "Backend API Project"
 }
-
 🗄️ Database
 
-PostgreSQL hosted on Render
+PostgreSQL hosted on Render.
 
-Tables:
+Tables
 
 users
 
@@ -131,13 +124,15 @@ projects
 
 tasks
 
-Relationships:
+Relationships
 
 One User → Many Projects
 
 One Project → Many Tasks
-
 ⚙️ Environment Variables
+
+Create a .env file and configure the following:
+
 DATABASE_URL=postgresql://<username>:<password>@<host>/<db_name>
 SECRET_KEY=your_secret_key
 ALGORITHM=HS256
@@ -145,8 +140,18 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 🚀 Run Locally
 git clone https://github.com/aadiiiitii001/Task-Project-Management-REST-API.git
-cd task-management-api
+cd Task-Project-Management-REST-API
+
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+
 pip install -r requirements.txt
+
 uvicorn app.main:app --reload
+
+📖 API Documentation
+
+Once the server is running, access Swagger UI at:
+
+http://127.0.0.1:8000/docs
+
