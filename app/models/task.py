@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Enum as SAEnum
 from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
 from app.db.base import Base
+from app.schemas.task import TaskStatus, TaskPriority
 
 def utcnow():
     return datetime.now(timezone.utc)
@@ -11,8 +12,8 @@ class Task(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(150), nullable=False)
     description = Column(Text, nullable=True)
-    status = Column(String(50), default="todo", nullable=False)
-    priority = Column(String(50), default="medium", nullable=False)
+    status = Column(SAEnum(TaskStatus), default=TaskStatus.todo, nullable=False)
+    priority = Column(SAEnum(TaskPriority), default=TaskPriority.medium, nullable=False)
     due_date = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=utcnow, nullable=False)
     updated_at = Column(DateTime, default=utcnow, onupdate=utcnow, nullable=False)
