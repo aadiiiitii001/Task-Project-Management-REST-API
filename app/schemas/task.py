@@ -1,28 +1,43 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 from datetime import datetime
+from enum import Enum
+
+
+class TaskStatus(str, Enum):
+    todo = "todo"
+    in_progress = "in_progress"
+    done = "done"
+
+
+class TaskPriority(str, Enum):
+    low = "low"
+    medium = "medium"
+    high = "high"
 
 
 class TaskCreate(BaseModel):
-    title: str = Field(..., max_length=100)
+    title: str = Field(..., min_length=1, max_length=150)
     description: Optional[str] = Field(None, max_length=300)
-    status: str
-    priority: str
+    status: TaskStatus = TaskStatus.todo
+    priority: TaskPriority = TaskPriority.medium
     due_date: Optional[datetime] = None
     project_id: int
     assigned_to: Optional[int] = None
 
 
 class TaskUpdate(BaseModel):
-    title: Optional[str] = Field(None, max_length=100)
+    title: Optional[str] = Field(None, min_length=1, max_length=150)
     description: Optional[str] = Field(None, max_length=300)
-    status: Optional[str] = None
-    priority: Optional[str] = None
+    status: Optional[TaskStatus] = None
+    priority: Optional[TaskPriority] = None
     due_date: Optional[datetime] = None
     assigned_to: Optional[int] = None
 
 
 class TaskResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     title: str
     description: Optional[str]
@@ -33,6 +48,3 @@ class TaskResponse(BaseModel):
     assigned_to: Optional[int]
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True
