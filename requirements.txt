@@ -3,11 +3,18 @@ uvicorn
 gunicorn
 sqlalchemy
 psycopg2-binary
-python-jose
+python-jose[cryptography]
 passlib[bcrypt]
-pydantic
+bcrypt==4.0.1
+pydantic[email]
 pydantic-settings
 python-dotenv
-pydantic[email]
-Streamlit
-Pandas
+python-multipart
+alembic
+streamlit
+pandas
+requests
+
+# Testing
+pytest
+httpx
